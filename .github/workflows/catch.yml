@@ -6,8 +6,9 @@ jobs:
   add:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-issue-from-file@v1
-        with:
-          title: ${{ github.event.client_payload.title }}
-          content: ${{ github.event.client_payload.payload }}
-          token: ${{ secrets.PAT }}
+      - run: |
+          gh api repos/${{ github.repository }}/issues \
+            -f title="${{ github.event.client_payload.title }}" \
+            -f body="${{ github.event.client_payload.payload }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
