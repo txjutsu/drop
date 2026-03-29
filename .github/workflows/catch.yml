@@ -1,0 +1,15 @@
+name: catch
+on:
+  repository_dispatch:
+    types: [ beacon ]
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/txjutsu/projects/1
+          github-token: ${{ secrets.PAT }}
+          fields: |
+            Title=${{ github.event.client_payload.title }}
+            Payload=${{ github.event.client_payload.payload }}
